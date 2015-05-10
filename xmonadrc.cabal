@@ -1,0 +1,32 @@
+name:                xmonadrc
+version:             0.1.0.0
+cabal-version:       >=1.10
+build-type:          Simple
+license:             BSD3
+license-file:        LICENSE
+copyright:           © 2015 Mauro Taraborelli
+author:              Mauro Taraborelli
+maintainer:          mauro@maurotaraborelli.com
+homepage:            https://github.com/maurotrb/xmonadrc
+synopsis:            Mauro's XMonad Configuration
+category:            Graphics
+extra-source-files:
+    README.md
+
+executable xmonadrc
+  main-is:           xmonadrc.hs
+  build-depends:
+      base           ==4.*
+     ,utf8-string    ==0.3.*
+     ,dbus           ==0.10.*
+     ,xmonad         ==0.11
+     ,xmonad-contrib ==0.11.3
+  default-language:    Haskell2010
+
+source-repository head
+  type:     git
+  location: https://github.com/maurotrb/xmonadrc.git
+
+source-repository head
+  type:     git
+  location: https://maurotrb@bitbucket.org/maurotrb/xmonadrc.git
