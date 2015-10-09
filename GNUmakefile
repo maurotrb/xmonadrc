@@ -3,11 +3,8 @@ ARCH              = $(shell uname -m)
 OS                = $(shell uname -s | tr '[A-Z]' '[a-z]')
 TARGET            = $(HOME)/.xmonad/xmonad-$(ARCH)-$(OS)
 SRC               = $(shell find . -type f -name '*.hs')
-DEST              = $(HOME)/bin
-SANDBOX           = cabal.sandbox.config
-XMONAD            = .cabal-sandbox/bin/xmonad
-XMONADRC          = dist/build/xmonadrc/xmonadrc
-CABAL_FLAGS       = --enable-optimization=2
+XMONAD            = .stack-work/install/x86_64-linux/lts-3.8/7.10.2/bin/xmonad
+XMONADRC          = $(HOME)/.local/bin/xmonadrc
 
 ################################################################################
 .PHONEY: all install restart clean realclean
@@ -17,7 +14,6 @@ all: $(XMONADRC)
 
 ################################################################################
 install: $(TARGET)
-	cp -f $(XMONADRC) $(DEST)/xmonad
 
 ################################################################################
 restart: install
@@ -25,27 +21,20 @@ restart: install
 
 ################################################################################
 clean:
-	rm -rf dist $(XMONADRC) $(CHECK) $(SANDBOX)
+	stack clean
+	rm -rf $(XMONADRC)
 
 ################################################################################
 realclean:
-	rm -rf .cabal-sandbox
+	rm -rf .stack-work
+	rm -rf $(XMONADRC)
 
 ################################################################################
-$(XMONADRC): $(SRC) $(SANDBOX)
-	ghc -V | grep -q 7.6.3 # Required compiler version.
-	cabal build
-
-################################################################################
-$(SANDBOX):
-	cabal sandbox init
-	cabal install --only-dependencies $(CABAL_FLAGS)
-	cabal configure $(CABAL_FLAGS)
-	touch $@
+$(XMONADRC): $(SRC)
+	stack install
 
 ################################################################################
 $(TARGET): $(XMONADRC)
 	mkdir -p $(dir $@)
 	if [ -r $@ ]; then mv $@ $@.prev; fi
 	cp -p $< $@
-	cd $(dir $@) && ln -nfs $(notdir $@) xmonadrc
