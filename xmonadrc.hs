@@ -64,21 +64,21 @@ myKeys =
     ]
 
 myLayoutHook = desktopLayoutModifiers $
-               onWorkspace "9" gimpLayout $
+               -- onWorkspace "9" gimpLayout $
                ((layoutHook xfceConfig) ||| Accordion)
 
 -- gimpLayout = withIM (0.18) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") Full
-gimpLayout = named "Gimp" $ split 0.20 Grid gimpMainAndRight (Role "gimp-toolbox")
-gimpMainAndRight = split (0.73 / (0.73 + 0.20)) simpleTabbed (Column 1.6) (Role "gimp-image-window")
-split x = combineTwoP (TwoPane 0.03 x)
+--gimpLayout = named "Gimp" $ split 0.20 Grid gimpMainAndRight (Role "gimp-toolbox")
+--gimpMainAndRight = split (0.73 / (0.73 + 0.20)) simpleTabbed (Column 1.6) (Role "gimp-image-window")
+--split x = combineTwoP (TwoPane 0.03 x)
 
 myPrettyPrinter :: D.Client -> PP
 myPrettyPrinter dbus = defaultPP
                        { ppOutput  = dbusOutput dbus
-                       , ppTitle   = pangoColor "#93a1a1" . shorten 50 . pangoSanitize
+                       , ppTitle   = pangoColor "#586e75" . shorten 50 . pangoSanitize
                        , ppCurrent = pangoColor "#d33682" . wrap "[" "]" . pangoSanitize
                        , ppVisible = pangoColor "#6c71c4" . wrap "(" ")" . pangoSanitize
-                       , ppHidden  = pangoColor "#fdf6e3" . wrap " " " "
+                       , ppHidden  = pangoColor "#93a1a1" . wrap " " " "
                        , ppUrgent  = pangoColor "#dc322f"
                        , ppLayout   = const ""
                        , ppSep      = " "
